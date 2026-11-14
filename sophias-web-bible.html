@@ -1,0 +1,232 @@
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Playfair+Display:ital,wght@0,700;0,900;1,700;1,900&family=PT+Serif:ital,wght@0,400;0,700;1,400&family=Special+Elite&display=swap">
+<title>Sophia's Bible Stories</title>
+<style>
+  :root{
+    --paper:#e9e4d6;
+    --paper-raised:#e1dac7;
+    --paper-edge:#c9c0a6;
+    --ink:#221e19;
+    --ink-soft:#584f3d;
+    --rule: rgba(34,30,25,0.82);
+    --rule-faint: rgba(34,30,25,0.28);
+    --accent-boba:#8a5a2c;
+    --accent-red:#9c342a;
+    --accent-teal:#276657;
+    --focus:#1c5fae;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --paper:#1b1815;
+      --paper-raised:#252019;
+      --paper-edge:#413a2c;
+      --ink:#ece4d3;
+      --ink-soft:#bfb49b;
+      --rule: rgba(236,228,211,0.8);
+      --rule-faint: rgba(236,228,211,0.25);
+      --accent-boba:#d7a15f;
+      --accent-red:#e2776a;
+      --accent-teal:#68b7a2;
+      --focus:#8dbdf2;
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#1b1815;
+    --paper-raised:#252019;
+    --paper-edge:#413a2c;
+    --ink:#ece4d3;
+    --ink-soft:#bfb49b;
+    --rule: rgba(236,228,211,0.8);
+    --rule-faint: rgba(236,228,211,0.25);
+    --accent-boba:#d7a15f;
+    --accent-red:#e2776a;
+    --accent-teal:#68b7a2;
+    --focus:#8dbdf2;
+  }
+
+  *{box-sizing:border-box;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'PT Serif', Georgia, 'Times New Roman', serif;
+    line-height:1.62;
+  }
+  .sheet{
+    max-width:760px;
+    margin:0 auto;
+    padding:1.75rem 1.25rem 4rem;
+  }
+  h1,h2{ text-wrap:balance; }
+  a{ color:var(--accent-boba); }
+  a:focus-visible{ outline:3px solid var(--focus); outline-offset:2px; }
+
+  .nav-row{
+    display:flex;
+    justify-content:center;
+    gap:1.5rem;
+    flex-wrap:wrap;
+    margin-bottom:1.25rem;
+  }
+  .nav-row a{
+    display:inline-block;
+    font-family:'Special Elite','Courier New',monospace;
+    font-size:.76rem;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    text-decoration:none;
+    color:var(--ink-soft);
+    border-bottom:1px solid var(--rule-faint);
+    padding-bottom:.15rem;
+  }
+  .nav-row a:hover{ color:var(--accent-red); border-color:var(--accent-red); }
+
+  .kicker{
+    font-family:'Special Elite', 'Courier New', monospace;
+    font-size:.72rem;
+    letter-spacing:.22em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+  }
+  .bible-head{ text-align:center; margin-bottom:2rem; }
+  .bible-head .nameplate-small{
+    font-family:'Archivo Black','Arial Black',sans-serif;
+    font-size:clamp(2rem,8vw,3.4rem);
+    color:var(--accent-teal);
+    margin:.35rem 0 0;
+    line-height:.95;
+  }
+  .dateline{
+    display:flex;
+    justify-content:center;
+    gap:1.5rem;
+    flex-wrap:wrap;
+    font-family:'Special Elite','Courier New',monospace;
+    font-size:.7rem;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+    border-top:3px double var(--rule);
+    border-bottom:1px solid var(--rule);
+    padding:.5rem .1rem;
+    margin-top:.75rem;
+  }
+
+  .stories-list{ display:flex; flex-direction:column; gap:2rem; }
+  .panel{
+    background:var(--paper-raised);
+    border:1px solid var(--ink);
+    box-shadow:5px 5px 0 var(--rule-faint);
+    padding:1.4rem 1.5rem 1.6rem;
+  }
+  .panel h2{
+    font-family:'Playfair Display',Georgia,serif;
+    font-weight:900;
+    font-size:1.5rem;
+    margin:0 0 .2rem;
+  }
+  .panel .caption{
+    font-size:.85rem;
+    color:var(--ink-soft);
+    margin:0 0 1rem;
+  }
+  .panel p.story{
+    margin:0;
+    font-size:1rem;
+  }
+  .panel p.story::first-letter{
+    font-family:'Playfair Display',Georgia,serif;
+    font-weight:900;
+    font-size:2.6em;
+    float:left;
+    line-height:.8;
+    padding:.04em .06em 0 0;
+    color:var(--accent-red);
+  }
+
+  footer{
+    margin-top:3rem;
+    padding-top:1.25rem;
+    border-top:1px solid var(--rule-faint);
+    text-align:center;
+    font-family:'Special Elite','Courier New',monospace;
+    font-size:.68rem;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+  }
+  footer a{ color:var(--ink-soft); }
+  footer a:hover{ color:var(--accent-red); }
+</style>
+
+<div class="sheet">
+
+  <div class="nav-row">
+    <a href="sophias-web.html">&#9664; Page One: Sophia's Web</a>
+    <a href="sophias-web-games.html">Page Two: Games</a>
+    <a href="sophias-web-story.html">Page Three: Chester&rsquo;s Treehouse</a>
+    <a href="sophias-web-hymns.html">Page Four: Hymns</a>
+    <a href="sophias-web-foods.html">Page Five: Favorite Foods</a>
+    <a href="sophias-web-robot.html">Page Seven: Make Your Own Robot</a>
+    <a href="sophias-web-canoe.html">Page Eight: The Canoe Ride</a>
+    <a href="sophias-web-house.html">Page Nine: Decorate Your Own House</a>
+  </div>
+
+  <header class="bible-head">
+    <div class="kicker">Special Kids&rsquo; Edition &middot; Page Six</div>
+    <h1 class="nameplate-small">BIBLE STORIES</h1>
+    <div class="dateline">
+      <span>Seven Stories</span>
+      <span>Zero Ads</span>
+      <span>Price: Free</span>
+    </div>
+  </header>
+
+  <div class="stories-list">
+    <div class="panel">
+      <h2>Creation</h2>
+      <p class="caption">Genesis 1&ndash;2</p>
+      <p class="story">In the beginning, the world was dark and empty. God spoke, and light appeared &mdash; the first of six days spent shaping the sky, the seas, the dry land, the sun, moon, and stars, and every kind of plant and creature that swims, flies, or walks. On the sixth day, God made the first man and woman and placed them in a garden called Eden to care for it. On the seventh day, God rested, and that day became special &mdash; set apart ever since as a day to rest and give thanks.</p>
+    </div>
+
+    <div class="panel">
+      <h2>Noah&rsquo;s Ark</h2>
+      <p class="caption">Genesis 6&ndash;9</p>
+      <p class="story">When the world grew wicked, God chose one honest man, Noah, and told him to build a giant boat called an ark. Noah worked for years, and when it was finished, he brought his family and two of every animal aboard, just as God had instructed. Rain fell for forty days and nights until water covered the whole earth, but the ark floated safely above it. Eventually the waters went down, the ark came to rest on a mountain, and a dove brought back an olive leaf &mdash; a sign that dry land had returned. God set a rainbow in the sky as a promise never to flood the whole earth again.</p>
+    </div>
+
+    <div class="panel">
+      <h2>David and Goliath</h2>
+      <p class="caption">1 Samuel 17</p>
+      <p class="story">The Philistine army had a giant warrior named Goliath, and for forty days he dared any Israelite to fight him &mdash; but everyone was afraid. Then a shepherd boy named David, too young to be a soldier, arrived with food for his brothers and heard the giant's taunts. David told the king he wasn't afraid, picked up five smooth stones from a stream, and walked out to face Goliath with only a sling. Goliath laughed, but David's very first stone struck true, and the giant fell. The boy who trusted God more than he feared a giant became one of Israel's greatest heroes.</p>
+    </div>
+
+    <div class="panel">
+      <h2>Daniel in the Lions&rsquo; Den</h2>
+      <p class="caption">Daniel 6</p>
+      <p class="story">Daniel served a king faithfully, but jealous officials tricked the king into signing a law that made praying to anyone but the king illegal for thirty days. Daniel kept praying anyway, three times a day, just as he always had. The king, though he liked Daniel, was bound by his own law and had to throw him into a den of lions. He barely slept that night, worrying. At dawn he rushed to the den and called out &mdash; and Daniel answered, unharmed, saying God had sent an angel to shut the lions' mouths. The king had Daniel lifted out, safe and sound.</p>
+    </div>
+
+    <div class="panel">
+      <h2>Esther</h2>
+      <p class="caption">Esther 2&ndash;9</p>
+      <p class="story">Esther was a young Jewish woman who became queen of Persia without the king ever knowing her background. When a proud official named Haman plotted to destroy the Jewish people across the whole empire, Esther's cousin Mordecai urged her to speak up, reminding her that she might have become queen for a moment just like this one. Esther risked her life by appearing before the king unsummoned &mdash; and instead of turning her away, he welcomed her in. At two carefully planned banquets, she revealed Haman's plot and her own identity, and the king stepped in to save her people. Her courage turned a planned tragedy into a celebration still remembered every year.</p>
+    </div>
+
+    <div class="panel">
+      <h2>Mary and the Manger</h2>
+      <p class="caption">Luke 2; Matthew 1&ndash;2</p>
+      <p class="story">A young woman named Mary learned she would become the mother of a very special baby, and she and Joseph traveled to Bethlehem for a census just as her time drew near. With no room left at the inn, they found shelter in a stable, and there Mary's baby, Jesus, was born and laid in a manger, a feeding trough lined with straw. That night, shepherds watching their flocks nearby were startled by angels announcing the good news, and they hurried into town to see the child for themselves. Far away, wise men noticed a new star and set out on a long journey, following it until it led them to the place where the young child lay.</p>
+    </div>
+
+    <div class="panel">
+      <h2>The Crucifixion and Resurrection</h2>
+      <p class="caption">Matthew 27&ndash;28; Luke 23&ndash;24; John 19&ndash;20</p>
+      <p class="story">Jesus spent His years on earth teaching, healing, and showing people God's love, but some leaders felt threatened by Him and had Him arrested on false charges. He was sentenced to die on a cross, even though He had done nothing wrong, and His friends watched in sorrow as He died. His body was placed in a stone tomb, and a heavy stone was rolled across the entrance. But three days later, on Sunday morning, some women who came to visit the tomb found the stone rolled away and the tomb empty. An angel told them Jesus was alive again, just as He had promised. Over the next weeks, Jesus appeared to His followers again and again, showing them He had truly risen from the dead &mdash; the reason Easter is celebrated every year since.</p>
+    </div>
+  </div>
+
+  <footer>
+    All rights reserved by Sophia &middot;
+    <a href="sophias-web.html">Back to the front page</a>
+  </footer>
+
+</div>
