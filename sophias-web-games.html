@@ -1,0 +1,561 @@
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Playfair+Display:ital,wght@0,700;0,900;1,700;1,900&family=PT+Serif:ital,wght@0,400;0,700;1,400&family=Special+Elite&family=Kalam:wght@400;700&display=swap">
+<title>Sophia's Games Page</title>
+<style>
+  :root{
+    --paper:#e9e4d6;
+    --paper-raised:#e1dac7;
+    --paper-edge:#c9c0a6;
+    --ink:#221e19;
+    --ink-soft:#584f3d;
+    --rule: rgba(34,30,25,0.82);
+    --rule-faint: rgba(34,30,25,0.28);
+    --accent-boba:#8a5a2c;
+    --accent-red:#9c342a;
+    --accent-teal:#276657;
+    --focus:#1c5fae;
+    --card-back: #d8cfb6;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --paper:#1b1815;
+      --paper-raised:#252019;
+      --paper-edge:#413a2c;
+      --ink:#ece4d3;
+      --ink-soft:#bfb49b;
+      --rule: rgba(236,228,211,0.8);
+      --rule-faint: rgba(236,228,211,0.25);
+      --accent-boba:#d7a15f;
+      --accent-red:#e2776a;
+      --accent-teal:#68b7a2;
+      --focus:#8dbdf2;
+      --card-back:#332c20;
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#1b1815;
+    --paper-raised:#252019;
+    --paper-edge:#413a2c;
+    --ink:#ece4d3;
+    --ink-soft:#bfb49b;
+    --rule: rgba(236,228,211,0.8);
+    --rule-faint: rgba(236,228,211,0.25);
+    --accent-boba:#d7a15f;
+    --accent-red:#e2776a;
+    --accent-teal:#68b7a2;
+    --focus:#8dbdf2;
+    --card-back:#332c20;
+  }
+
+  *{box-sizing:border-box;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'PT Serif', Georgia, 'Times New Roman', serif;
+    line-height:1.62;
+  }
+  .sheet{
+    max-width:760px;
+    margin:0 auto;
+    padding:1.75rem 1.25rem 4rem;
+  }
+  h1,h2,h3{ text-wrap:balance; }
+  a{ color:var(--accent-boba); }
+  a:focus-visible, button:focus-visible{
+    outline:3px solid var(--focus);
+    outline-offset:2px;
+  }
+
+  .backlink{
+    display:flex;
+    justify-content:space-between;
+    gap:1rem;
+    flex-wrap:wrap;
+    margin-bottom:1.25rem;
+  }
+  .backlink a{
+    display:inline-block;
+    font-family:'Special Elite','Courier New',monospace;
+    font-size:.78rem;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    text-decoration:none;
+    color:var(--ink-soft);
+    border-bottom:1px solid var(--rule-faint);
+    padding-bottom:.15rem;
+  }
+  .backlink a:hover{ color:var(--accent-red); border-color:var(--accent-red); }
+
+  .kicker{
+    font-family:'Special Elite', 'Courier New', monospace;
+    font-size:.72rem;
+    letter-spacing:.22em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+  }
+  .dateline{
+    display:flex;
+    justify-content:center;
+    gap:1.5rem;
+    flex-wrap:wrap;
+    font-family:'Special Elite','Courier New',monospace;
+    font-size:.7rem;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+    border-top:3px double var(--rule);
+    border-bottom:1px solid var(--rule);
+    padding:.5rem .1rem;
+    margin-top:.75rem;
+  }
+
+  .section-label{
+    text-align:center;
+    font-family:'Special Elite','Courier New',monospace;
+    font-size:.78rem;
+    letter-spacing:.2em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+    border-top:1px solid var(--rule-faint);
+    border-bottom:1px solid var(--rule-faint);
+    padding:.5rem 0;
+    margin:0 0 1.5rem;
+  }
+  .funnies{ margin-bottom:3rem; }
+
+  .comic-strip{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:1rem;
+  }
+  @media (min-width:600px){
+    .comic-strip{ grid-template-columns:repeat(4,1fr); }
+  }
+  .comic-panel{
+    background:var(--paper-raised);
+    border:2px solid var(--ink);
+    padding:.9rem .7rem 1rem;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    text-align:center;
+  }
+  .comic-scene{
+    display:flex;
+    align-items:flex-end;
+    justify-content:center;
+    gap:.15rem;
+    font-size:2.6rem;
+    line-height:1;
+    height:2.8rem;
+    margin-bottom:.7rem;
+  }
+  .comic-scene .flip{ display:inline-block; transform:scaleX(-1); }
+  .comic-bubble{
+    position:relative;
+    background:var(--paper);
+    border:1.5px solid var(--ink);
+    border-radius:14px;
+    padding:.5rem .6rem;
+    font-family:'Kalam','Special Elite',cursive;
+    font-weight:700;
+    font-size:.82rem;
+    line-height:1.25;
+    min-height:3.6em;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .comic-num{
+    font-family:'Special Elite','Courier New',monospace;
+    font-size:.62rem;
+    letter-spacing:.1em;
+    color:var(--ink-soft);
+    margin-bottom:.4rem;
+  }
+
+  /* ---------- games section ---------- */
+  .games-head{ text-align:center; margin-bottom:2rem; }
+  .games-head .nameplate-small{
+    font-family:'Archivo Black','Arial Black',sans-serif;
+    font-size:clamp(2rem,8vw,3.4rem);
+    color:var(--accent-teal);
+    margin:.35rem 0 0;
+    line-height:.95;
+  }
+  .games-grid{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:2rem;
+  }
+  @media (min-width:600px){
+    .games-grid{ grid-template-columns:1fr 1fr; }
+  }
+  .panel{
+    background:var(--paper-raised);
+    border:1px solid var(--ink);
+    box-shadow:5px 5px 0 var(--rule-faint);
+    padding:1.4rem 1.4rem 1.6rem;
+  }
+  .panel h3{
+    font-family:'Playfair Display',Georgia,serif;
+    font-weight:900;
+    font-size:1.3rem;
+    margin:0 0 .2rem;
+  }
+  .panel .caption{
+    font-size:.85rem;
+    color:var(--ink-soft);
+    margin:0 0 1rem;
+  }
+  .status-line{
+    font-family:'Special Elite','Courier New',monospace;
+    font-size:.85rem;
+    letter-spacing:.03em;
+    min-height:1.4em;
+    margin:.75rem 0;
+  }
+  .game-btn{
+    font-family:'Special Elite','Courier New',monospace;
+    font-size:.72rem;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    background:var(--ink);
+    color:var(--paper);
+    border:none;
+    padding:.55rem 1rem;
+    cursor:pointer;
+  }
+  .game-btn:hover{ background:var(--accent-red); }
+
+  .memory-board{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:6px;
+    width:min(280px,100%);
+    margin:0 auto;
+  }
+  .mcard{
+    aspect-ratio:1;
+    border:1px solid var(--ink);
+    background:var(--card-back);
+    font-size:1.4rem;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    color:transparent;
+    transition:background .15s ease, color .15s ease;
+  }
+  @media (prefers-reduced-motion:reduce){ .mcard{ transition:none; } }
+  .mcard.flipped, .mcard.matched{ background:var(--paper); color:var(--ink); }
+  .mcard.matched{ border-color:var(--accent-teal); cursor:default; }
+  .mcard:disabled{ cursor:default; }
+  .row-between{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:.5rem;
+    margin-top:1rem;
+  }
+
+  .c4-board{
+    display:grid;
+    grid-template-columns:repeat(7,1fr);
+    gap:4px;
+    background:var(--ink);
+    padding:5px;
+    width:100%;
+    max-width:280px;
+    margin:0 auto;
+  }
+  .c4-cell{
+    aspect-ratio:1;
+    border-radius:50%;
+    background:var(--paper);
+    border:none;
+    padding:0;
+    cursor:pointer;
+  }
+  .c4-cell:disabled{ cursor:default; }
+  .c4-cell.p1{ background:var(--accent-red); }
+  .c4-cell.p2{ background:var(--accent-teal); }
+  .c4-cell.win{ box-shadow:inset 0 0 0 3px var(--ink); }
+
+  footer{
+    margin-top:3rem;
+    padding-top:1.25rem;
+    border-top:1px solid var(--rule-faint);
+    text-align:center;
+    font-family:'Special Elite','Courier New',monospace;
+    font-size:.68rem;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+  }
+  footer a{ color:var(--ink-soft); }
+  footer a:hover{ color:var(--accent-red); }
+</style>
+
+<div class="sheet">
+
+  <div class="backlink">
+    <a href="sophias-web.html">&#9664; Page One: Sophia's Web</a>
+    <a href="sophias-web-story.html">Page Three: Chester&rsquo;s Treehouse</a>
+    <a href="sophias-web-hymns.html">Page Four: Hymns</a>
+    <a href="sophias-web-foods.html">Page Five: Favorite Foods</a>
+    <a href="sophias-web-bible.html">Page Six: Bible Stories</a>
+    <a href="sophias-web-robot.html">Page Seven: Make Your Own Robot</a>
+    <a href="sophias-web-canoe.html">Page Eight: The Canoe Ride</a>
+    <a href="sophias-web-house.html">Page Nine: Decorate Your Own House &#9654;</a>
+  </div>
+
+  <header class="games-head">
+    <div class="kicker">Special Kids&rsquo; Edition &middot; Page Two</div>
+    <h1 class="nameplate-small">THE FUNNIES &amp; GAMES</h1>
+    <div class="dateline">
+      <span>Two Games</span>
+      <span>Zero Ads</span>
+      <span>Price: Free</span>
+    </div>
+  </header>
+
+  <section class="funnies">
+    <h2 class="section-label">The Funnies &mdash; Sophia &amp; The Fluffy Dog</h2>
+    <div class="comic-strip">
+      <div class="comic-panel">
+        <div class="comic-num">1</div>
+        <div class="comic-scene">
+          <span>👧</span><span class="flip">🐩</span>
+        </div>
+        <div class="comic-bubble">"AAH! That dog is SO big and SO fluffy!"</div>
+      </div>
+      <div class="comic-panel">
+        <div class="comic-num">2</div>
+        <div class="comic-scene">
+          <span>👧</span><span>🐩</span>
+        </div>
+        <div class="comic-bubble">Sophia peeks. The dog just... sits there. Wagging.</div>
+      </div>
+      <div class="comic-panel">
+        <div class="comic-num">3</div>
+        <div class="comic-scene">
+          <span>👧</span><span>🐾</span>
+        </div>
+        <div class="comic-bubble">"Oh! Your paw is so soft. Hi, pup."</div>
+      </div>
+      <div class="comic-panel">
+        <div class="comic-num">4</div>
+        <div class="comic-scene">
+          <span>👧</span><span>🐩</span><span>💕</span>
+        </div>
+        <div class="comic-bubble">Best friends. She wasn't scared one bit&mdash;anymore.</div>
+      </div>
+    </div>
+  </section>
+
+  <h2 class="section-label">The Games</h2>
+  <div class="games-grid">
+    <div class="panel">
+      <h3>Connect Four</h3>
+      <p class="caption">Take turns. Click a column to drop a disc. Four in a row wins.</p>
+      <div class="c4-board" id="c4Board" role="grid" aria-label="Connect Four board"></div>
+      <div class="row-between">
+        <div class="status-line" id="c4Status">Red's turn</div>
+        <button class="game-btn" id="c4Reset" type="button">New Game</button>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h3>Memory Match</h3>
+      <p class="caption">Flip two cards at a time. Match all six pairs.</p>
+      <div class="memory-board" id="memBoard"></div>
+      <div class="row-between">
+        <div class="status-line" id="memStatus">Moves: 0</div>
+        <button class="game-btn" id="memReset" type="button">Shuffle</button>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    All rights reserved by Sophia &middot;
+    <a href="sophias-web.html">Back to the front page</a>
+  </footer>
+
+</div>
+
+<script>
+(function(){
+  // ---------- Connect Four ----------
+  var ROWS = 6, COLS = 7;
+  var c4Board = document.getElementById('c4Board');
+  var c4Status = document.getElementById('c4Status');
+  var c4Grid, c4Turn, c4Over, c4Cells;
+
+  function c4New(){
+    c4Grid = [];
+    for(var r = 0; r < ROWS; r++){ c4Grid.push(new Array(COLS).fill(0)); }
+    c4Turn = 1;
+    c4Over = false;
+    c4Status.textContent = "Red's turn";
+    c4Board.innerHTML = '';
+    c4Cells = [];
+    for(var i = 0; i < ROWS * COLS; i++){
+      var b = document.createElement('button');
+      b.className = 'c4-cell';
+      b.type = 'button';
+      var col = i % COLS;
+      b.setAttribute('aria-label', 'Column ' + (col + 1));
+      b.addEventListener('click', (function(colIndex){
+        return function(){ c4Drop(colIndex); };
+      })(col));
+      c4Board.appendChild(b);
+      c4Cells.push(b);
+    }
+  }
+
+  function c4CellAt(r, c){ return c4Cells[r * COLS + c]; }
+
+  function c4Drop(col){
+    if(c4Over) return;
+    var row = -1;
+    for(var r = ROWS - 1; r >= 0; r--){
+      if(c4Grid[r][col] === 0){ row = r; break; }
+    }
+    if(row === -1) return;
+    c4Grid[row][col] = c4Turn;
+    var cell = c4CellAt(row, col);
+    cell.classList.add(c4Turn === 1 ? 'p1' : 'p2');
+
+    var win = c4CheckWin(row, col);
+    if(win){
+      c4Over = true;
+      c4Status.textContent = (c4Turn === 1 ? 'Red' : 'Teal') + ' wins!';
+      win.forEach(function(pos){ c4CellAt(pos[0], pos[1]).classList.add('win'); });
+      return;
+    }
+    if(c4Grid.every(function(rw){ return rw.every(function(v){ return v !== 0; }); })){
+      c4Over = true;
+      c4Status.textContent = "It's a draw!";
+      return;
+    }
+    c4Turn = c4Turn === 1 ? 2 : 1;
+    c4Status.textContent = (c4Turn === 1 ? "Red" : "Teal") + "'s turn";
+  }
+
+  function c4CheckWin(row, col){
+    var val = c4Grid[row][col];
+    var dirs = [[0,1],[1,0],[1,1],[1,-1]];
+    for(var d = 0; d < dirs.length; d++){
+      var dr = dirs[d][0], dc = dirs[d][1];
+      var cells = [[row, col]];
+      var r = row + dr, c = col + dc;
+      while(r >= 0 && r < ROWS && c >= 0 && c < COLS && c4Grid[r][c] === val){
+        cells.push([r, c]);
+        r += dr; c += dc;
+      }
+      r = row - dr; c = col - dc;
+      while(r >= 0 && r < ROWS && c >= 0 && c < COLS && c4Grid[r][c] === val){
+        cells.push([r, c]);
+        r -= dr; c -= dc;
+      }
+      if(cells.length >= 4) return cells;
+    }
+    return null;
+  }
+
+  document.getElementById('c4Reset').addEventListener('click', c4New);
+  c4New();
+
+  // ---------- Memory Match ----------
+  var ICONS = ['🧧','✈️','5️⃣','🚲','✏️','🎂'];
+  var memBoard = document.getElementById('memBoard');
+  var memStatus = document.getElementById('memStatus');
+  var cards = [];
+  var flipped = [];
+  var matched = 0;
+  var moves = 0;
+  var lock = false;
+  var BEST_KEY = 'sophias-web-memory-best';
+
+  function shuffledDeck(){
+    var deck = ICONS.concat(ICONS);
+    for(var i = deck.length - 1; i > 0; i--){
+      var j = Math.floor(Math.random() * (i+1));
+      var t = deck[i]; deck[i] = deck[j]; deck[j] = t;
+    }
+    return deck;
+  }
+
+  function getBest(){
+    try{
+      var v = localStorage.getItem(BEST_KEY);
+      return v ? parseInt(v, 10) : null;
+    }catch(e){ return null; }
+  }
+  function setBest(v){
+    try{ localStorage.setItem(BEST_KEY, String(v)); }catch(e){}
+  }
+
+  function renderMoves(){
+    var best = getBest();
+    memStatus.textContent = 'Moves: ' + moves + (best ? ' · Best: ' + best : '');
+  }
+
+  function buildMemory(){
+    var deck = shuffledDeck();
+    memBoard.innerHTML = '';
+    cards = [];
+    flipped = [];
+    matched = 0;
+    moves = 0;
+    lock = false;
+    renderMoves();
+    deck.forEach(function(icon, i){
+      var b = document.createElement('button');
+      b.className = 'mcard';
+      b.type = 'button';
+      b.textContent = icon;
+      b.setAttribute('aria-label', 'Card ' + (i+1) + ', face down');
+      b.addEventListener('click', function(){ flipCard(i); });
+      memBoard.appendChild(b);
+      cards.push({ icon: icon, el: b, state: 'down' });
+    });
+  }
+
+  function flipCard(i){
+    var c = cards[i];
+    if(lock || c.state !== 'down') return;
+    c.state = 'up';
+    c.el.classList.add('flipped');
+    flipped.push(i);
+    if(flipped.length === 2){
+      moves++;
+      renderMoves();
+      var a = cards[flipped[0]], bb = cards[flipped[1]];
+      if(a.icon === bb.icon){
+        a.state = 'matched'; bb.state = 'matched';
+        a.el.classList.add('matched'); bb.el.classList.add('matched');
+        a.el.disabled = true; bb.el.disabled = true;
+        flipped = [];
+        matched++;
+        if(matched === ICONS.length){
+          var best = getBest();
+          if(!best || moves < best) setBest(moves);
+          memStatus.textContent = 'You matched them all in ' + moves + ' moves!';
+        }
+      } else {
+        lock = true;
+        setTimeout(function(){
+          a.state = 'down'; bb.state = 'down';
+          a.el.classList.remove('flipped'); bb.el.classList.remove('flipped');
+          flipped = [];
+          lock = false;
+        }, 700);
+      }
+    }
+  }
+
+  document.getElementById('memReset').addEventListener('click', buildMemory);
+  buildMemory();
+})();
+</script>
