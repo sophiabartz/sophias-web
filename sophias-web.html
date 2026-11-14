@@ -1,0 +1,368 @@
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Alex+Brush&family=Playfair+Display:ital,wght@0,700;0,900;1,700;1,900&family=PT+Serif:ital,wght@0,400;0,700;1,400&family=Special+Elite&display=swap">
+<title>Sophia's Web</title>
+<style>
+  :root{
+    --paper:#e9e4d6;
+    --paper-raised:#e1dac7;
+    --paper-edge:#c9c0a6;
+    --ink:#221e19;
+    --ink-soft:#584f3d;
+    --rule: rgba(34,30,25,0.82);
+    --rule-faint: rgba(34,30,25,0.28);
+    --accent-boba:#8a5a2c;
+    --accent-red:#9c342a;
+    --accent-teal:#276657;
+    --focus:#1c5fae;
+    --card-back: #d8cfb6;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --paper:#1b1815;
+      --paper-raised:#252019;
+      --paper-edge:#413a2c;
+      --ink:#ece4d3;
+      --ink-soft:#bfb49b;
+      --rule: rgba(236,228,211,0.8);
+      --rule-faint: rgba(236,228,211,0.25);
+      --accent-boba:#d7a15f;
+      --accent-red:#e2776a;
+      --accent-teal:#68b7a2;
+      --focus:#8dbdf2;
+      --card-back:#332c20;
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#1b1815;
+    --paper-raised:#252019;
+    --paper-edge:#413a2c;
+    --ink:#ece4d3;
+    --ink-soft:#bfb49b;
+    --rule: rgba(236,228,211,0.8);
+    --rule-faint: rgba(236,228,211,0.25);
+    --accent-boba:#d7a15f;
+    --accent-red:#e2776a;
+    --accent-teal:#68b7a2;
+    --focus:#8dbdf2;
+    --card-back:#332c20;
+  }
+
+  *{box-sizing:border-box;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'PT Serif', Georgia, 'Times New Roman', serif;
+    line-height:1.62;
+  }
+  .sheet{
+    max-width:960px;
+    margin:0 auto;
+    padding:1.75rem 1.25rem 4rem;
+  }
+  h1,h2,h3{ text-wrap:balance; }
+  a{ color:var(--accent-boba); }
+  a:focus-visible, button:focus-visible{
+    outline:3px solid var(--focus);
+    outline-offset:2px;
+  }
+
+  /* ---------- masthead ---------- */
+  .masthead{ text-align:center; padding-top:.5rem; }
+  .kicker{
+    font-family:'Special Elite', 'Courier New', monospace;
+    font-size:.72rem;
+    letter-spacing:.22em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+  }
+  .nameplate{
+    margin:.25rem 0 .1rem;
+    font-family:'Archivo Black','Arial Black',sans-serif;
+    font-size:clamp(2.75rem, 12vw, 6.5rem);
+    line-height:.92;
+    letter-spacing:.01em;
+    color:var(--ink);
+  }
+  .nameplate .cursive{
+    font-family:'Alex Brush','Brush Script MT',cursive;
+    font-size:1.5em;
+    color:var(--accent-red);
+    margin-left:.18em;
+    vertical-align:-0.06em;
+  }
+  .dateline{
+    display:flex;
+    justify-content:space-between;
+    gap:.5rem;
+    flex-wrap:wrap;
+    font-family:'Special Elite','Courier New',monospace;
+    font-size:.7rem;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+    border-top:3px double var(--rule);
+    border-bottom:1px solid var(--rule);
+    padding:.5rem .1rem;
+    margin-top:.75rem;
+  }
+  .double-rule{
+    height:5px;
+    border-top:3px solid var(--ink);
+    border-bottom:1px solid var(--ink);
+    margin:.35rem 0 1.5rem;
+  }
+
+  /* ---------- front page grid ---------- */
+  .frontpage{
+    display:grid;
+    grid-template-columns: 1fr;
+    gap:2rem;
+  }
+  @media (min-width:760px){
+    .frontpage{ grid-template-columns: 2fr 1fr; align-items:start; }
+  }
+
+  .byline{
+    font-family:'Special Elite','Courier New',monospace;
+    font-size:.75rem;
+    letter-spacing:.05em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+    margin:.35rem 0 1rem;
+  }
+  article + article{
+    margin-top:2.25rem;
+    padding-top:2rem;
+    border-top:1px solid var(--rule-faint);
+  }
+  .headline{
+    font-family:'Playfair Display',Georgia,serif;
+    font-weight:900;
+    font-size:clamp(1.5rem, 3.4vw, 2.35rem);
+    line-height:1.08;
+    margin:0;
+  }
+  .deck{
+    font-family:'Playfair Display',Georgia,serif;
+    font-style:italic;
+    font-weight:700;
+    color:var(--ink-soft);
+    font-size:1.05rem;
+    margin:.35rem 0 0;
+  }
+  .article-body{
+    column-count:2;
+    column-gap:2rem;
+    column-rule:1px solid var(--rule-faint);
+    text-align:left;
+    hyphens:auto;
+  }
+  @media (max-width:759px){
+    .article-body{ column-count:1; hyphens:none; }
+  }
+  .article-body p{ margin:0 0 1rem; break-inside:avoid-column; }
+  .article-body p:first-of-type::first-letter{
+    font-family:'Playfair Display',Georgia,serif;
+    font-weight:900;
+    font-size:3.4em;
+    float:left;
+    line-height:.82;
+    padding:.05em .07em 0 0;
+    color:var(--accent-red);
+  }
+  .note{
+    font-size:.92rem;
+    font-style:italic;
+    color:var(--ink-soft);
+    border-left:3px solid var(--accent-boba);
+    padding:.15rem 0 .15rem .85rem;
+    margin-top:1rem;
+    break-inside:avoid-column;
+  }
+
+  /* ---------- sidebar ---------- */
+  aside{ display:flex; flex-direction:column; gap:1.5rem; }
+  .box{
+    background:var(--paper-raised);
+    border:1px solid var(--paper-edge);
+    padding:1.1rem 1.25rem 1.3rem;
+  }
+  .box-title{
+    font-family:'Special Elite','Courier New',monospace;
+    font-size:.75rem;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    border-bottom:2px solid var(--ink);
+    padding-bottom:.4rem;
+    margin-bottom:.7rem;
+  }
+  .spyglass{
+    display:block;
+    margin:0 0 .6rem;
+    transform:rotate(-4deg);
+  }
+  dl.facts{ margin:0; display:grid; grid-template-columns:auto 1fr; gap:.45rem 1rem; }
+  dl.facts dt{
+    font-family:'Special Elite','Courier New',monospace;
+    font-size:.68rem;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+    white-space:nowrap;
+    align-self:start;
+    padding-top:.15rem;
+  }
+  dl.facts dd{ margin:0; font-weight:700; }
+
+  .quotebox{
+    background:var(--paper-raised);
+    border:1px solid var(--paper-edge);
+    padding:1.5rem 1.6rem 1.7rem;
+    margin-top:2.25rem;
+  }
+  .quotebox .box-title{ text-align:center; }
+  .quotebox blockquote{
+    margin:0;
+    font-family:'Playfair Display',Georgia,serif;
+    font-style:italic;
+    font-size:1.12rem;
+    line-height:1.65;
+  }
+  .quotebox blockquote::before{ content:"\201C"; color:var(--accent-red); font-size:1.3em; }
+  .quotebox cite{
+    display:block;
+    margin-top:.9rem;
+    font-style:normal;
+    font-family:'Special Elite','Courier New',monospace;
+    font-size:.72rem;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+  }
+
+  .turnpage{
+    text-align:center;
+    margin:3rem 0 2.5rem;
+    padding:1rem 0;
+    border-top:3px double var(--rule);
+    border-bottom:3px double var(--rule);
+  }
+  .turnpage-multi{
+    display:flex;
+    justify-content:center;
+    align-items:flex-start;
+    gap:2.5rem;
+    flex-wrap:wrap;
+  }
+  .turnpage a{
+    display:inline-block;
+    font-family:'Special Elite','Courier New',monospace;
+    font-size:.85rem;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+    text-decoration:none;
+    color:var(--ink);
+  }
+  .turnpage a:hover{ color:var(--accent-red); }
+  .turnpage .arrow{ display:block; font-size:1.3rem; margin-bottom:.15rem; }
+
+  footer{
+    margin-top:3rem;
+    padding-top:1.25rem;
+    border-top:1px solid var(--rule-faint);
+    text-align:center;
+    font-family:'Special Elite','Courier New',monospace;
+    font-size:.68rem;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+  }
+</style>
+
+<div class="sheet">
+
+  <header class="masthead">
+    <div class="kicker">Special Kids&rsquo; Edition</div>
+    <h1 class="nameplate">SOPHIA'S<span class="cursive">web</span></h1>
+    <div class="dateline">
+      <span>Vol. I, No. 9</span>
+      <span>Reporting Since Day One</span>
+      <span>Price: Free</span>
+    </div>
+  </header>
+
+  <div class="double-rule"></div>
+
+  <div class="frontpage">
+    <main>
+      <article>
+        <h2 class="headline">Local Reporter Excels At Math, Making Things</h2>
+        <p class="deck">Sophia, also learning to bike and drafting her first stories this year</p>
+        <p class="byline">By Sophia &middot; Staff Reporter</p>
+        <div class="article-body">
+          <p>Sophia is heading into a new school year, and by all accounts she is ready for it. Teachers and classmates point first to her math skills &mdash; she moves through numbers the way other reporters move through a deadline &mdash; and second to her knack for making things, whether that means building, crafting with her KiwiCo kits, or dreaming up something new from scratch.</p>
+          <p>Off the page, she is currently learning to ride a bike, a project she is tackling with the same patience she brings to a hard math problem. She has also taken up writing stories, a hobby this reporter is uniquely qualified to cover.</p>
+        </div>
+      </article>
+
+      <article>
+        <h2 class="headline">Summer Travel Desk: Field Trips Top The Itinerary, Again</h2>
+        <p class="byline">By Sophia &middot; Travel Correspondent</p>
+        <div class="article-body">
+          <p>This reporter has racked up a whole lot of cavities on the record, dental complaints notwithstanding &mdash; travel remains the favorite pastime, especially field trips, which rank above ordinary trips in every category that matters. Summers at the family household are consistently described as great, and the family "almost always" goes somewhere when the season arrives.</p>
+          <p class="note">Editor's note: the claim that the family "almost always" goes somewhere each summer is, by the reporter's own account, based on memory rather than a checked itinerary. This paper stands by her recollection.</p>
+        </div>
+      </article>
+    </main>
+
+    <aside>
+      <div class="box">
+        <div class="box-title">At A Glance</div>
+        <dl class="facts">
+          <dt>Favorite number</dt><dd>5</dd>
+          <dt>Fun fact</dt><dd>Has had a whole lot of cavities</dd>
+          <dt>Crafts with</dt><dd>KiwiCo</dd>
+          <dt>Learning</dt><dd>How to bike</dd>
+          <dt>Also does</dt><dd>Writes stories</dd>
+        </dl>
+      </div>
+
+      <div class="box">
+        <div class="box-title">Why Five?</div>
+        <svg class="spyglass" viewBox="0 0 100 40" width="72" height="29" aria-hidden="true">
+          <circle cx="7" cy="20" r="4" fill="var(--ink)"/>
+          <polygon points="7,17 7,23 72,9 72,31" fill="var(--accent-boba)"/>
+          <line x1="28" y1="15.5" x2="28" y2="24.5" stroke="var(--ink)" stroke-width="1.5"/>
+          <line x1="49" y1="12.5" x2="49" y2="27.5" stroke="var(--ink)" stroke-width="1.5"/>
+          <ellipse cx="74" cy="20" rx="7" ry="13" fill="var(--ink)"/>
+          <ellipse cx="76" cy="20" rx="4.5" ry="9.5" fill="var(--paper)" opacity=".65"/>
+        </svg>
+        <p style="margin:0;">Five is the reporter's favorite number "because it is in the middle of 10, 100, 1000, and so on" &mdash; a tidy piece of number sense from a paper that appreciates a good pattern.</p>
+      </div>
+    </aside>
+  </div>
+
+  <div class="quotebox">
+    <div class="box-title">In Her Own Words</div>
+    <blockquote>
+      I am good at math and making stuff. I like boba and I love going on trips, especially field trips. I always have a great summer, and we almost always go somewhere. And the part about me almost going somewhere is from what I remember. My favorite number is 5, because it is in the middle of 10, 100, 1000, and so on. I am learning how to bike. I like writing stories, too. So now you know all about me. Please scroll down to go to the section with games.
+    </blockquote>
+    <cite>&mdash; Sophia</cite>
+  </div>
+
+  <div class="turnpage turnpage-multi">
+    <a href="sophias-web-games.html"><span class="arrow">&#9654;</span>Page Two &mdash; Games</a>
+    <a href="sophias-web-story.html"><span class="arrow">&#9654;</span>Page Three &mdash; Chester&rsquo;s Treehouse</a>
+    <a href="sophias-web-hymns.html"><span class="arrow">&#9654;</span>Page Four &mdash; Hymns</a>
+    <a href="sophias-web-foods.html"><span class="arrow">&#9654;</span>Page Five &mdash; Favorite Foods</a>
+    <a href="sophias-web-bible.html"><span class="arrow">&#9654;</span>Page Six &mdash; Bible Stories</a>
+    <a href="sophias-web-robot.html"><span class="arrow">&#9654;</span>Page Seven &mdash; Make Your Own Robot</a>
+    <a href="sophias-web-canoe.html"><span class="arrow">&#9654;</span>Page Eight &mdash; The Canoe Ride</a>
+    <a href="sophias-web-house.html"><span class="arrow">&#9654;</span>Page Nine &mdash; Decorate Your Own House</a>
+  </div>
+
+  <footer>
+    All rights reserved by Sophia &middot; Printed on 100% recycled imagination
+  </footer>
+
+</div>
+
