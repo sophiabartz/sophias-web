@@ -1,0 +1,413 @@
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Alex+Brush&family=Kalam:wght@400;700&family=Special+Elite&family=PT+Serif:ital,wght@0,400;0,700;1,400&display=swap">
+<title>Sophia's Favorite Foods</title>
+<style>
+  :root{
+    --paper:#e9e4d6;
+    --paper-raised:#e1dac7;
+    --paper-edge:#c9c0a6;
+    --ink:#221e19;
+    --ink-soft:#584f3d;
+    --rule: rgba(34,30,25,0.82);
+    --rule-faint: rgba(34,30,25,0.28);
+    --accent-boba:#8a5a2c;
+    --accent-red:#9c342a;
+    --accent-teal:#276657;
+    --flower-pink:#c46b7a;
+    --flower-lilac:#7d6a9c;
+    --flower-gold:#b9872f;
+    --focus:#1c5fae;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --paper:#1b1815;
+      --paper-raised:#252019;
+      --paper-edge:#413a2c;
+      --ink:#ece4d3;
+      --ink-soft:#bfb49b;
+      --rule: rgba(236,228,211,0.8);
+      --rule-faint: rgba(236,228,211,0.25);
+      --accent-boba:#d7a15f;
+      --accent-red:#e2776a;
+      --accent-teal:#68b7a2;
+      --flower-pink:#e08a9a;
+      --flower-lilac:#a897c9;
+      --flower-gold:#e0b563;
+      --focus:#8dbdf2;
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#1b1815;
+    --paper-raised:#252019;
+    --paper-edge:#413a2c;
+    --ink:#ece4d3;
+    --ink-soft:#bfb49b;
+    --rule: rgba(236,228,211,0.8);
+    --rule-faint: rgba(236,228,211,0.25);
+    --accent-boba:#d7a15f;
+    --accent-red:#e2776a;
+    --accent-teal:#68b7a2;
+    --flower-pink:#e08a9a;
+    --flower-lilac:#a897c9;
+    --flower-gold:#e0b563;
+    --focus:#8dbdf2;
+  }
+
+  *{box-sizing:border-box;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'PT Serif', Georgia, 'Times New Roman', serif;
+    line-height:1.6;
+  }
+  .sheet{
+    max-width:760px;
+    margin:0 auto;
+    padding:1.75rem 1.25rem 4rem;
+  }
+  h1{ text-wrap:balance; }
+  a{ color:var(--accent-boba); }
+  a:focus-visible{ outline:3px solid var(--focus); outline-offset:2px; }
+
+  .nav-row{ text-align:center; margin-bottom:1.5rem; }
+  .nav-row a{
+    display:inline-block;
+    font-family:'Special Elite','Courier New',monospace;
+    font-size:.78rem;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    text-decoration:none;
+    color:var(--ink-soft);
+    border-bottom:1px solid var(--rule-faint);
+    padding-bottom:.15rem;
+  }
+  .nav-row a:hover{ color:var(--accent-red); border-color:var(--accent-red); }
+
+  .foods-head{ text-align:center; padding-top:.25rem; }
+  .kicker{
+    font-family:'Special Elite', 'Courier New', monospace;
+    font-size:.72rem;
+    letter-spacing:.22em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+  }
+  .nameplate{
+    margin:.3rem 0 .1rem;
+    font-family:'Archivo Black','Arial Black',sans-serif;
+    font-size:clamp(2.1rem, 8vw, 4.2rem);
+    line-height:1.05;
+    color:var(--ink);
+  }
+  .nameplate .cursive{
+    font-family:'Alex Brush','Brush Script MT',cursive;
+    font-size:1.35em;
+    color:var(--accent-red);
+    vertical-align:-0.12em;
+  }
+  .dateline{
+    display:flex;
+    justify-content:center;
+    gap:1.5rem;
+    flex-wrap:wrap;
+    font-family:'Special Elite','Courier New',monospace;
+    font-size:.7rem;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+    border-top:3px double var(--rule);
+    border-bottom:1px solid var(--rule);
+    padding:.5rem .1rem;
+    margin-top:.9rem;
+  }
+
+  .food-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:1.25rem;
+    margin-top:2.25rem;
+  }
+  @media (min-width:560px){
+    .food-grid{ grid-template-columns:repeat(3,1fr); }
+  }
+
+  .food-card{
+    background:var(--paper-raised);
+    border:1px solid var(--paper-edge);
+    padding:1.1rem .8rem 1rem;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:flex-start;
+    gap:.6rem;
+    text-align:center;
+  }
+  .food-word{
+    position:relative;
+    display:inline-flex;
+    align-items:flex-end;
+  }
+  .food-text{
+    font-family:'Kalam', 'Special Elite', cursive;
+    font-weight:700;
+    font-size:1.5rem;
+    line-height:1.05;
+    color:var(--ink);
+    text-align:center;
+  }
+  .food-flower{
+    width:1.5rem;
+    height:1.5rem;
+    flex:none;
+    margin-left:.1rem;
+    transform:translate(-.15rem,.3rem) rotate(var(--rot, 0deg));
+  }
+  .food-flower svg{ display:block; width:100%; height:100%; }
+  .food-pic{ width:76px; height:76px; }
+
+  footer{
+    margin-top:3rem;
+    padding-top:1.25rem;
+    border-top:1px solid var(--rule-faint);
+    text-align:center;
+    font-family:'Special Elite','Courier New',monospace;
+    font-size:.68rem;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+  }
+  footer a{ color:var(--ink-soft); }
+  footer a:hover{ color:var(--accent-red); }
+</style>
+
+<div class="sheet">
+
+  <div class="nav-row">
+    <a href="sophias-web.html">&#9664; Page One: Sophia's Web</a>
+    <a href="sophias-web-games.html">Page Two: Games</a>
+    <a href="sophias-web-story.html">Page Three: Chester&rsquo;s Treehouse</a>
+    <a href="sophias-web-hymns.html">Page Four: Hymns</a>
+    <a href="sophias-web-bible.html">Page Six: Bible Stories</a>
+    <a href="sophias-web-robot.html">Page Seven: Make Your Own Robot</a>
+    <a href="sophias-web-canoe.html">Page Eight: The Canoe Ride</a>
+    <a href="sophias-web-house.html">Page Nine: Decorate Your Own House &#9654;</a>
+  </div>
+
+  <header class="foods-head">
+    <div class="kicker">Special Kids&rsquo; Edition &middot; Page Five</div>
+    <h1 class="nameplate">SOPHIA'S<br><span class="cursive">favorite</span> FOODS</h1>
+    <div class="dateline">
+      <span>Eight Favorites</span>
+      <span>Zero Substitutions</span>
+      <span>Price: Free</span>
+    </div>
+  </header>
+
+  <div class="food-grid">
+    <div class="food-card">
+      <svg class="food-pic" viewBox="0 0 100 100" aria-hidden="true">
+        <ellipse cx="50" cy="70" rx="34" ry="16" fill="#f4eee0"/>
+        <rect x="18" y="38" width="64" height="30" rx="14" fill="#e8836f"/>
+        <rect x="14" y="58" width="14" height="22" fill="#2a2a26"/>
+        <rect x="72" y="58" width="14" height="22" fill="#2a2a26"/>
+        <circle cx="38" cy="76" r="2" fill="#fff"/>
+        <circle cx="50" cy="79" r="2" fill="#fff"/>
+        <circle cx="62" cy="76" r="2" fill="#fff"/>
+      </svg>
+      <span class="food-word">
+        <span class="food-text">Sushi</span>
+        <span class="food-flower" style="color:var(--flower-pink); --rot:-8deg;">
+          <svg viewBox="0 0 40 40" aria-hidden="true">
+            <circle cx="20" cy="9" r="7" fill="currentColor"/>
+            <circle cx="30" cy="16" r="7" fill="currentColor"/>
+            <circle cx="26" cy="27" r="7" fill="currentColor"/>
+            <circle cx="14" cy="27" r="7" fill="currentColor"/>
+            <circle cx="10" cy="16" r="7" fill="currentColor"/>
+            <circle cx="20" cy="18" r="5" fill="var(--ink)"/>
+          </svg>
+        </span>
+      </span>
+    </div>
+
+    <div class="food-card">
+      <svg class="food-pic" viewBox="0 0 100 100" aria-hidden="true">
+        <rect x="46" y="8" width="8" height="34" rx="3" fill="#e8836f"/>
+        <rect x="27" y="32" width="46" height="9" rx="3" fill="#efe6d3"/>
+        <path d="M32 40 L68 40 L60 92 L40 92 Z" fill="#c98a4b"/>
+        <circle cx="44" cy="82" r="4" fill="#2a2a26"/>
+        <circle cx="53" cy="85" r="4" fill="#2a2a26"/>
+        <circle cx="48" cy="74" r="4" fill="#2a2a26"/>
+        <circle cx="57" cy="76" r="4" fill="#2a2a26"/>
+      </svg>
+      <span class="food-word">
+        <span class="food-text">Boba</span>
+        <span class="food-flower" style="color:var(--accent-boba); --rot:6deg;">
+          <svg viewBox="0 0 40 40" aria-hidden="true">
+            <circle cx="20" cy="9" r="7" fill="currentColor"/>
+            <circle cx="30" cy="16" r="7" fill="currentColor"/>
+            <circle cx="26" cy="27" r="7" fill="currentColor"/>
+            <circle cx="14" cy="27" r="7" fill="currentColor"/>
+            <circle cx="10" cy="16" r="7" fill="currentColor"/>
+            <circle cx="20" cy="18" r="5" fill="var(--ink)"/>
+          </svg>
+        </span>
+      </span>
+    </div>
+
+    <div class="food-card">
+      <svg class="food-pic" viewBox="0 0 100 100" aria-hidden="true">
+        <ellipse cx="50" cy="58" rx="38" ry="22" fill="#e0a23c"/>
+        <path d="M12 55 a38 20 0 0 0 76 0" fill="none" stroke="#221e19" stroke-width="3"/>
+        <ellipse cx="50" cy="38" rx="38" ry="9" fill="none" stroke="#221e19" stroke-width="3"/>
+        <text x="32" y="62" font-family="Kalam, cursive" font-weight="700" font-size="16" fill="#221e19" transform="rotate(-8 32 62)">A</text>
+        <text x="50" y="68" font-family="Kalam, cursive" font-weight="700" font-size="16" fill="#221e19" transform="rotate(6 50 68)">B</text>
+        <text x="65" y="58" font-family="Kalam, cursive" font-weight="700" font-size="16" fill="#221e19" transform="rotate(-4 65 58)">C</text>
+      </svg>
+      <span class="food-word">
+        <span class="food-text">Alphabet Soup</span>
+        <span class="food-flower" style="color:var(--accent-teal); --rot:-5deg;">
+          <svg viewBox="0 0 40 40" aria-hidden="true">
+            <circle cx="20" cy="9" r="7" fill="currentColor"/>
+            <circle cx="30" cy="16" r="7" fill="currentColor"/>
+            <circle cx="26" cy="27" r="7" fill="currentColor"/>
+            <circle cx="14" cy="27" r="7" fill="currentColor"/>
+            <circle cx="10" cy="16" r="7" fill="currentColor"/>
+            <circle cx="20" cy="18" r="5" fill="var(--ink)"/>
+          </svg>
+        </span>
+      </span>
+    </div>
+
+    <div class="food-card">
+      <svg class="food-pic" viewBox="0 0 100 100" aria-hidden="true">
+        <ellipse cx="50" cy="60" rx="40" ry="22" fill="#8a5a2c"/>
+        <path d="M22 55 q8 -10 16 0 q8 10 16 0 q8 -10 16 0" stroke="#f4eee0" stroke-width="4" fill="none" stroke-linecap="round"/>
+        <circle cx="66" cy="46" r="8" fill="#f8e4e4"/>
+        <path d="M66 41 a5 5 0 1 1 -4 8" stroke="#c46b7a" stroke-width="2" fill="none"/>
+        <ellipse cx="32" cy="46" rx="4" ry="2.5" fill="#4c7a4a"/>
+        <ellipse cx="26" cy="52" rx="4" ry="2.5" fill="#4c7a4a"/>
+      </svg>
+      <span class="food-word">
+        <span class="food-text">Ramen</span>
+        <span class="food-flower" style="color:var(--accent-red); --rot:9deg;">
+          <svg viewBox="0 0 40 40" aria-hidden="true">
+            <circle cx="20" cy="9" r="7" fill="currentColor"/>
+            <circle cx="30" cy="16" r="7" fill="currentColor"/>
+            <circle cx="26" cy="27" r="7" fill="currentColor"/>
+            <circle cx="14" cy="27" r="7" fill="currentColor"/>
+            <circle cx="10" cy="16" r="7" fill="currentColor"/>
+            <circle cx="20" cy="18" r="5" fill="var(--ink)"/>
+          </svg>
+        </span>
+      </span>
+    </div>
+
+    <div class="food-card">
+      <svg class="food-pic" viewBox="0 0 100 100" aria-hidden="true">
+        <path d="M22 45 L78 45 L66 90 L34 90 Z" fill="#eef2f5"/>
+        <ellipse cx="50" cy="42" rx="30" ry="16" fill="#ffffff"/>
+        <path d="M25 38 q25 -18 50 0" stroke="#e8836f" stroke-width="5" fill="none" stroke-linecap="round"/>
+        <path d="M28 46 q22 -14 44 0" stroke="#7d6a9c" stroke-width="5" fill="none" stroke-linecap="round"/>
+        <path d="M31 32 q19 -12 38 0" stroke="#5aa08f" stroke-width="4" fill="none" stroke-linecap="round"/>
+      </svg>
+      <span class="food-word">
+        <span class="food-text">Shaved Ice</span>
+        <span class="food-flower" style="color:var(--flower-lilac); --rot:-7deg;">
+          <svg viewBox="0 0 40 40" aria-hidden="true">
+            <circle cx="20" cy="9" r="7" fill="currentColor"/>
+            <circle cx="30" cy="16" r="7" fill="currentColor"/>
+            <circle cx="26" cy="27" r="7" fill="currentColor"/>
+            <circle cx="14" cy="27" r="7" fill="currentColor"/>
+            <circle cx="10" cy="16" r="7" fill="currentColor"/>
+            <circle cx="20" cy="18" r="5" fill="var(--ink)"/>
+          </svg>
+        </span>
+      </span>
+    </div>
+
+    <div class="food-card">
+      <svg class="food-pic" viewBox="0 0 100 100" aria-hidden="true">
+        <path d="M38 24 q-4 -6 0 -12 q4 -6 0 -12" stroke="var(--ink-soft)" stroke-width="2" fill="none" opacity=".55"/>
+        <path d="M58 24 q-4 -6 0 -12 q4 -6 0 -12" stroke="var(--ink-soft)" stroke-width="2" fill="none" opacity=".55"/>
+        <path d="M74 50 q18 0 18 15 q0 15 -18 15" stroke="#8a5a2c" stroke-width="6" fill="none"/>
+        <rect x="25" y="40" width="50" height="45" rx="8" fill="#8a5a2c"/>
+        <ellipse cx="50" cy="40" rx="25" ry="7" fill="#5c3a1c"/>
+        <circle cx="42" cy="38" r="6" fill="#fff"/>
+        <circle cx="55" cy="36" r="6" fill="#fff"/>
+        <circle cx="49" cy="41" r="6" fill="#fff"/>
+      </svg>
+      <span class="food-word">
+        <span class="food-text">Hot Cocoa</span>
+        <span class="food-flower" style="color:var(--flower-gold); --rot:5deg;">
+          <svg viewBox="0 0 40 40" aria-hidden="true">
+            <circle cx="20" cy="9" r="7" fill="currentColor"/>
+            <circle cx="30" cy="16" r="7" fill="currentColor"/>
+            <circle cx="26" cy="27" r="7" fill="currentColor"/>
+            <circle cx="14" cy="27" r="7" fill="currentColor"/>
+            <circle cx="10" cy="16" r="7" fill="currentColor"/>
+            <circle cx="20" cy="18" r="5" fill="var(--ink)"/>
+          </svg>
+        </span>
+      </span>
+    </div>
+
+    <div class="food-card">
+      <svg class="food-pic" viewBox="0 0 100 100" aria-hidden="true">
+        <circle cx="36" cy="58" r="17" fill="#e8d9b0"/>
+        <circle cx="62" cy="46" r="17" fill="#e8d9b0"/>
+        <circle cx="66" cy="70" r="17" fill="#e8d9b0"/>
+        <circle cx="30" cy="52" r="1.6" fill="#a8905c"/>
+        <circle cx="40" cy="63" r="1.6" fill="#a8905c"/>
+        <circle cx="36" cy="58" r="1.6" fill="#a8905c"/>
+        <circle cx="57" cy="41" r="1.6" fill="#a8905c"/>
+        <circle cx="66" cy="48" r="1.6" fill="#a8905c"/>
+        <circle cx="61" cy="52" r="1.6" fill="#a8905c"/>
+        <circle cx="61" cy="65" r="1.6" fill="#a8905c"/>
+        <circle cx="71" cy="72" r="1.6" fill="#a8905c"/>
+        <circle cx="66" cy="76" r="1.6" fill="#a8905c"/>
+      </svg>
+      <span class="food-word">
+        <span class="food-text">Oyster Crackers</span>
+        <span class="food-flower" style="color:var(--flower-gold); --rot:-6deg;">
+          <svg viewBox="0 0 40 40" aria-hidden="true">
+            <circle cx="20" cy="9" r="7" fill="currentColor"/>
+            <circle cx="30" cy="16" r="7" fill="currentColor"/>
+            <circle cx="26" cy="27" r="7" fill="currentColor"/>
+            <circle cx="14" cy="27" r="7" fill="currentColor"/>
+            <circle cx="10" cy="16" r="7" fill="currentColor"/>
+            <circle cx="20" cy="18" r="5" fill="var(--ink)"/>
+          </svg>
+        </span>
+      </span>
+    </div>
+
+    <div class="food-card">
+      <svg class="food-pic" viewBox="0 0 100 100" aria-hidden="true">
+        <ellipse cx="50" cy="62" rx="37" ry="27" fill="#c9963f"/>
+        <ellipse cx="50" cy="52" rx="30" ry="19" fill="#d9ac57" opacity=".55"/>
+        <line x1="24" y1="52" x2="46" y2="38" stroke="#7a541f" stroke-width="3" stroke-linecap="round"/>
+        <line x1="38" y1="60" x2="60" y2="46" stroke="#7a541f" stroke-width="3" stroke-linecap="round"/>
+        <line x1="52" y1="66" x2="74" y2="52" stroke="#7a541f" stroke-width="3" stroke-linecap="round"/>
+      </svg>
+      <span class="food-word">
+        <span class="food-text">Sourdough Bread</span>
+        <span class="food-flower" style="color:var(--accent-boba); --rot:7deg;">
+          <svg viewBox="0 0 40 40" aria-hidden="true">
+            <circle cx="20" cy="9" r="7" fill="currentColor"/>
+            <circle cx="30" cy="16" r="7" fill="currentColor"/>
+            <circle cx="26" cy="27" r="7" fill="currentColor"/>
+            <circle cx="14" cy="27" r="7" fill="currentColor"/>
+            <circle cx="10" cy="16" r="7" fill="currentColor"/>
+            <circle cx="20" cy="18" r="5" fill="var(--ink)"/>
+          </svg>
+        </span>
+      </span>
+    </div>
+  </div>
+
+  <footer>
+    All rights reserved by Sophia &middot;
+    <a href="sophias-web.html">Back to the front page</a>
+  </footer>
+
+</div>
+
+
