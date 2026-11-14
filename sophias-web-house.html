@@ -1,0 +1,447 @@
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Kalam:wght@400;700&family=Special+Elite&family=PT+Serif:ital,wght@0,400;0,700;1,400&display=swap">
+<title>Decorate Your Own House</title>
+<style>
+  :root{
+    --paper:#e9e4d6;
+    --paper-raised:#e1dac7;
+    --paper-edge:#c9c0a6;
+    --ink:#221e19;
+    --ink-soft:#584f3d;
+    --rule: rgba(34,30,25,0.82);
+    --rule-faint: rgba(34,30,25,0.28);
+    --accent-boba:#8a5a2c;
+    --accent-red:#9c342a;
+    --accent-teal:#276657;
+    --focus:#1c5fae;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --paper:#1b1815;
+      --paper-raised:#252019;
+      --paper-edge:#413a2c;
+      --ink:#ece4d3;
+      --ink-soft:#bfb49b;
+      --rule: rgba(236,228,211,0.8);
+      --rule-faint: rgba(236,228,211,0.25);
+      --accent-boba:#d7a15f;
+      --accent-red:#e2776a;
+      --accent-teal:#68b7a2;
+      --focus:#8dbdf2;
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#1b1815;
+    --paper-raised:#252019;
+    --paper-edge:#413a2c;
+    --ink:#ece4d3;
+    --ink-soft:#bfb49b;
+    --rule: rgba(236,228,211,0.8);
+    --rule-faint: rgba(236,228,211,0.25);
+    --accent-boba:#d7a15f;
+    --accent-red:#e2776a;
+    --accent-teal:#68b7a2;
+    --focus:#8dbdf2;
+  }
+
+  *{box-sizing:border-box;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'PT Serif', Georgia, 'Times New Roman', serif;
+    line-height:1.6;
+  }
+  .sheet{
+    max-width:760px;
+    margin:0 auto;
+    padding:1.75rem 1.25rem 4rem;
+  }
+  h1{ text-wrap:balance; }
+  a{ color:var(--accent-boba); }
+  a:focus-visible, button:focus-visible{ outline:3px solid var(--focus); outline-offset:2px; }
+
+  .nav-row{
+    display:flex;
+    justify-content:center;
+    gap:1.4rem;
+    flex-wrap:wrap;
+    margin-bottom:1.25rem;
+  }
+  .nav-row a{
+    display:inline-block;
+    font-family:'Special Elite','Courier New',monospace;
+    font-size:.74rem;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    text-decoration:none;
+    color:var(--ink-soft);
+    border-bottom:1px solid var(--rule-faint);
+    padding-bottom:.15rem;
+  }
+  .nav-row a:hover{ color:var(--accent-red); border-color:var(--accent-red); }
+
+  .kicker{
+    font-family:'Special Elite', 'Courier New', monospace;
+    font-size:.72rem;
+    letter-spacing:.22em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+  }
+  .house-head{ text-align:center; margin-bottom:1.5rem; }
+  .house-head .nameplate-small{
+    font-family:'Archivo Black','Arial Black',sans-serif;
+    font-size:clamp(1.7rem,7vw,2.9rem);
+    color:var(--accent-teal);
+    margin:.35rem 0 0;
+    line-height:1.05;
+  }
+  .dateline{
+    display:flex;
+    justify-content:center;
+    gap:1.5rem;
+    flex-wrap:wrap;
+    font-family:'Special Elite','Courier New',monospace;
+    font-size:.7rem;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+    border-top:3px double var(--rule);
+    border-bottom:1px solid var(--rule);
+    padding:.5rem .1rem;
+    margin-top:.75rem;
+  }
+
+  .instructions{
+    text-align:center;
+    font-family:'Kalam','Special Elite',cursive;
+    font-weight:700;
+    font-size:1rem;
+    margin:1.25rem 0 1rem;
+  }
+
+  .house-stage{
+    position:relative;
+    width:100%;
+    aspect-ratio:600/460;
+    background:#fbf8ef;
+    border:3px solid var(--ink);
+    touch-action:none;
+    overflow:hidden;
+  }
+  .house-outline{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    pointer-events:none;
+  }
+  .house-outline .wall{ fill:none; stroke:var(--ink); stroke-width:4; stroke-linejoin:round; }
+  .house-outline .chimney{ fill:#c0392b; }
+  .house-outline .divider{ stroke:var(--ink); stroke-width:2.5; }
+  .house-outline .hint{ stroke:var(--ink-soft); stroke-width:2; fill:none; }
+  .house-outline .room-label{
+    font-family:'Special Elite','Courier New',monospace;
+    font-size:15px;
+    letter-spacing:.06em;
+    fill:var(--ink-soft);
+  }
+  .furniture-layer{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+  }
+  .piece{
+    position:absolute;
+    transform:translate(-50%,-50%);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:grab;
+    touch-action:none;
+    user-select:none;
+  }
+  .piece:active{ cursor:grabbing; }
+  .piece-emoji{
+    font-size:2.3rem;
+    line-height:1;
+    filter:drop-shadow(0 2px 2px rgba(0,0,0,.3));
+  }
+  .piece-art{ display:block; width:1.25em; height:1em; }
+  .furn-btn .piece-art{ width:1.15em; height:.95em; }
+  .piece-del{
+    position:absolute;
+    top:-.5rem;
+    right:-.5rem;
+    width:1.15rem;
+    height:1.15rem;
+    line-height:1;
+    border-radius:50%;
+    background:var(--accent-red);
+    color:#fff;
+    border:none;
+    font-size:.75rem;
+    font-family:'Special Elite','Courier New',monospace;
+    cursor:pointer;
+    opacity:0;
+    transition:opacity .15s ease;
+  }
+  .piece:hover .piece-del, .piece:focus-within .piece-del{ opacity:1; }
+
+  .furniture-picker{
+    display:flex;
+    justify-content:center;
+    gap:.5rem;
+    flex-wrap:wrap;
+    margin-top:1.1rem;
+  }
+  .furn-btn{
+    font-size:1.5rem;
+    line-height:1;
+    background:var(--paper-raised);
+    border:1px solid var(--paper-edge);
+    padding:.4rem .55rem;
+    cursor:pointer;
+  }
+  .furn-btn:hover{ border-color:var(--accent-boba); }
+
+  .action-row{
+    display:flex;
+    justify-content:center;
+    gap:1rem;
+    flex-wrap:wrap;
+    margin-top:1.5rem;
+  }
+  .action-btn{
+    font-family:'Special Elite','Courier New',monospace;
+    font-size:.72rem;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    background:var(--ink);
+    color:var(--paper);
+    border:none;
+    padding:.55rem 1.1rem;
+    cursor:pointer;
+  }
+  .action-btn:hover{ background:var(--accent-red); }
+
+  footer{
+    margin-top:3rem;
+    padding-top:1.25rem;
+    border-top:1px solid var(--rule-faint);
+    text-align:center;
+    font-family:'Special Elite','Courier New',monospace;
+    font-size:.68rem;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+  }
+  footer a{ color:var(--ink-soft); }
+  footer a:hover{ color:var(--accent-red); }
+</style>
+
+<div class="sheet">
+
+  <div class="nav-row">
+    <a href="sophias-web.html">Page One: Sophia's Web</a>
+    <a href="sophias-web-games.html">Page Two: Games</a>
+    <a href="sophias-web-story.html">Page Three: Chester&rsquo;s Treehouse</a>
+    <a href="sophias-web-hymns.html">Page Four: Hymns</a>
+    <a href="sophias-web-foods.html">Page Five: Favorite Foods</a>
+    <a href="sophias-web-bible.html">Page Six: Bible Stories</a>
+    <a href="sophias-web-robot.html">Page Seven: Make Your Own Robot</a>
+    <a href="sophias-web-canoe.html">Page Eight: The Canoe Ride</a>
+  </div>
+
+  <header class="house-head">
+    <div class="kicker">Special Kids&rsquo; Edition &middot; Page Nine &middot; Workshop</div>
+    <h1 class="nameplate-small">DECORATE YOUR OWN HOUSE</h1>
+    <div class="dateline">
+      <span>Four Rooms</span>
+      <span>Furniture &amp; People</span>
+      <span>Price: Free</span>
+    </div>
+  </header>
+
+  <p class="instructions">Here&rsquo;s the house. Tap furniture or people to add them, then drag into place!</p>
+
+  <div class="house-stage">
+    <svg class="house-outline" viewBox="0 0 600 460" preserveAspectRatio="none" aria-hidden="true">
+      <polygon class="wall chimney" points="415,42 445,42 445,109 415,91"/>
+      <polygon class="wall" points="300,20 560,180 40,180"/>
+      <rect class="wall" x="60" y="180" width="480" height="260"/>
+      <line class="divider" x1="60" y1="310" x2="540" y2="310"/>
+      <line class="divider" x1="300" y1="180" x2="300" y2="440"/>
+      <rect class="hint" x="110" y="220" width="50" height="40"/>
+      <line class="hint" x1="135" y1="220" x2="135" y2="260"/>
+      <line class="hint" x1="110" y1="240" x2="160" y2="240"/>
+      <rect class="hint" x="440" y="220" width="50" height="40"/>
+      <line class="hint" x1="465" y1="220" x2="465" y2="260"/>
+      <line class="hint" x1="440" y1="240" x2="490" y2="240"/>
+      <text class="room-label" x="78" y="205">Bedroom</text>
+      <text class="room-label" x="408" y="205">Playroom</text>
+      <text class="room-label" x="78" y="335">Kitchen</text>
+      <text class="room-label" x="378" y="335">Living Room</text>
+    </svg>
+    <div class="furniture-layer" id="furnitureLayer"></div>
+  </div>
+
+  <div class="furniture-picker" id="furniturePicker" role="group" aria-label="Add furniture or a person"></div>
+
+  <div class="action-row">
+    <button class="action-btn" id="clearFurnBtn" type="button">Clear All</button>
+  </div>
+
+  <footer>
+    All rights reserved by Sophia &middot;
+    <a href="sophias-web.html">Back to the front page</a>
+  </footer>
+
+</div>
+
+<script>
+(function(){
+  var stage = document.querySelector('.house-stage');
+  var furnitureLayer = document.getElementById('furnitureLayer');
+  var furniturePicker = document.getElementById('furniturePicker');
+  var clearFurnBtn = document.getElementById('clearFurnBtn');
+
+  var FURNITURE = [
+    { emoji: '\u{1F6CF}\u{FE0F}', label: 'Bed' },
+    { emoji: '\u{1F6CB}\u{FE0F}', label: 'Sofa' },
+    { emoji: '\u{1FA91}', label: 'Chair' },
+    { emoji: '\u{1F4FA}', label: 'TV' },
+    { emoji: 'table', label: 'Table' },
+    { emoji: '\u{1F37D}\u{FE0F}', label: 'Plate' },
+    { emoji: '\u{1FAB4}', label: 'Plant' },
+    { emoji: '\u{1F4A1}', label: 'Lamp' },
+    { emoji: '\u{1F5BC}\u{FE0F}', label: 'Frame' },
+    { emoji: '\u{1F9F8}', label: 'Teddy Bear' },
+    { emoji: '\u{1F6C1}', label: 'Bathtub' },
+    { emoji: '\u{1F4DA}', label: 'Books' },
+    { emoji: '\u{1F467}', label: 'Girl' },
+    { emoji: '\u{1F469}\u{200D}\u{1F9B1}', label: 'Sister' },
+    { emoji: '\u{1F466}', label: 'Boy' },
+    { emoji: '\u{1F469}', label: 'Mom' },
+    { emoji: '\u{1F468}', label: 'Dad' },
+    { emoji: '\u{1F476}', label: 'Baby' }
+  ];
+  var ART = {
+    table: '<svg class="piece-art" viewBox="0 0 50 40" aria-hidden="true">' +
+      '<rect x="8" y="14" width="5" height="24" rx="1" fill="#7a4a24"/>' +
+      '<rect x="37" y="14" width="5" height="24" rx="1" fill="#7a4a24"/>' +
+      '<rect x="12" y="14" width="26" height="4" fill="#6a3f1e"/>' +
+      '<rect x="2" y="8" width="46" height="7" rx="2" fill="#a8693a"/>' +
+      '<rect x="2" y="8" width="46" height="2.5" rx="1.2" fill="#c4854f"/>' +
+      '</svg>'
+  };
+  function fillArt(node, emoji){
+    if(ART[emoji]) node.innerHTML = ART[emoji];
+    else node.textContent = emoji;
+  }
+  var FURN_STORE_KEY = 'sophias-web-house-furniture';
+  var pieceSeq = 0;
+
+  function saveFurniture(){
+    try{
+      var pieces = Array.prototype.map.call(furnitureLayer.children, function(el){
+        return { emoji: el.dataset.emoji, x: parseFloat(el.style.left), y: parseFloat(el.style.top) };
+      });
+      localStorage.setItem(FURN_STORE_KEY, JSON.stringify(pieces));
+    }catch(e){}
+  }
+
+  function makePieceEl(emoji, x, y){
+    var el = document.createElement('div');
+    el.className = 'piece';
+    el.dataset.emoji = emoji;
+    el.style.left = x + '%';
+    el.style.top = y + '%';
+
+    var del = document.createElement('button');
+    del.type = 'button';
+    del.className = 'piece-del';
+    del.setAttribute('aria-label', 'Remove furniture');
+    del.textContent = '×';
+    del.addEventListener('pointerdown', function(e){ e.stopPropagation(); });
+    del.addEventListener('click', function(e){
+      e.stopPropagation();
+      el.remove();
+      saveFurniture();
+    });
+
+    var span = document.createElement('span');
+    span.className = 'piece-emoji';
+    fillArt(span, emoji);
+
+    el.appendChild(span);
+    el.appendChild(del);
+
+    var dragging = false;
+    el.addEventListener('pointerdown', function(e){
+      dragging = true;
+      el.setPointerCapture(e.pointerId);
+    });
+    el.addEventListener('pointermove', function(e){
+      if(!dragging) return;
+      var rect = stage.getBoundingClientRect();
+      var nx = ((e.clientX - rect.left) / rect.width) * 100;
+      var ny = ((e.clientY - rect.top) / rect.height) * 100;
+      nx = Math.min(97, Math.max(3, nx));
+      ny = Math.min(96, Math.max(4, ny));
+      el.style.left = nx + '%';
+      el.style.top = ny + '%';
+    });
+    function stopDrag(){
+      if(!dragging) return;
+      dragging = false;
+      saveFurniture();
+    }
+    el.addEventListener('pointerup', stopDrag);
+    el.addEventListener('pointercancel', stopDrag);
+
+    return el;
+  }
+
+  function addPiece(emoji, x, y){
+    var el = makePieceEl(emoji, x, y);
+    furnitureLayer.appendChild(el);
+    saveFurniture();
+  }
+
+  function buildFurniturePicker(){
+    FURNITURE.forEach(function(f){
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'furn-btn';
+      fillArt(b, f.emoji);
+      b.setAttribute('aria-label', 'Add ' + f.label);
+      b.addEventListener('click', function(){
+        pieceSeq++;
+        var jitter = (pieceSeq % 5) * 4;
+        addPiece(f.emoji, 46 + jitter, 46 + jitter);
+      });
+      furniturePicker.appendChild(b);
+    });
+  }
+
+  function loadFurniture(){
+    try{
+      var raw = localStorage.getItem(FURN_STORE_KEY);
+      if(!raw) return;
+      var pieces = JSON.parse(raw);
+      pieces.forEach(function(p){
+        if(p.emoji === 'sister' || p.emoji === '\u{1F471}\u{200D}\u{2640}\u{FE0F}') p.emoji = '\u{1F469}\u{200D}\u{1F9B1}';
+        furnitureLayer.appendChild(makePieceEl(p.emoji, p.x, p.y));
+      });
+    }catch(e){}
+  }
+
+  clearFurnBtn.addEventListener('click', function(){
+    furnitureLayer.innerHTML = '';
+    saveFurniture();
+  });
+
+  buildFurniturePicker();
+  loadFurniture();
+})();
+</script>
